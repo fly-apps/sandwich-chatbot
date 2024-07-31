@@ -1,0 +1,28 @@
+# fly.toml app configuration file generated for sandwich-chatbot on 2024-07-31T08:03:09+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'sandwich-chatbot'
+primary_region = 'ams'
+
+[build]
+
+[env]
+  OLLAMA_HOST = "http://llama31-7b.flycast"
+
+[http_service]
+  internal_port = 8000
+  force_https = false
+  auto_stop_machines = 'suspend'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  memory = '2gb'
+  cpu_kind = 'shared'
+  cpus = 2
+
+[experimental.attached.secrets.export]
+  SANDWICH_CHAT_URL = "http://${FLYCAST_URL}/sandwich-chat"
